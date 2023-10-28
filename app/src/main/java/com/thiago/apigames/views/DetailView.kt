@@ -31,11 +31,15 @@ import com.thiago.apigames.components.ReviewCard
 import com.thiago.apigames.utils.Constants.Companion.CUSTOM_BLACK
 import com.thiago.apigames.viewmodel.GamesViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
-fun DetailView(viewModel: GamesViewModel, navController: NavController, id: Int) {
+fun DetailView(viewModel: GamesViewModel, navController: NavController, id: Int,name:String?) {
     LaunchedEffect(Unit) {
-        viewModel.getGameById(id)
+        if(id ==0){
+            name?.let { viewModel.getGameByName(it.replace(" ","-")) }
+        }else{
+            viewModel.getGameById(id)
+        }
     }
     DisposableEffect(Unit) {
         onDispose { viewModel.clean() }
